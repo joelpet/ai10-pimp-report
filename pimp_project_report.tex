@@ -191,14 +191,14 @@ performing only two XOR operations, which only requires 2 operations.
 
 % TODO Simple example with 5x3 board.
 
-``But hey'', you object, ``you have to take the player position in consideration
-too''. And yes, that is also true. The naive solution would simply be to let a
-cell have a state where the player is present, in addition to the states \emph{empty}
-and \emph{box}. However, that would cause many equivalent states to generate
-different hashes, like those in \ref{fig:equalStatesDifferentHash}. For that
-reason, we instead keep track of the top leftmost position that the player may
-reach without moving any boxes and XOR:ing the hash with that position (which is
-actually also hashed).
+``But hey'', you object, ``you have to take the player position in
+consideration too''. And yes, that is also true. The naive solution would
+simply be to let a cell have a state where the player is present, in addition
+to the states \emph{empty} and \emph{box}. However, that would cause many
+equivalent states to generate different hashes, like those in
+Figure~\ref{fig:equalStatesDifferentHash}. For that reason, we instead keep
+track of the top leftmost position that the player may reach without moving any
+boxes and XOR:ing the hash with that position (which is actually also hashed).
 
 \begin{figure}[h!]
     \begin{center}
@@ -252,6 +252,22 @@ continues until no more changes can be made.
 \end{figure}
 
 \subsubsection{Freeze deadlock}
+
+Another type of deadlock is a \emph{freeze deadlock}. This occur when a box gets
+blocked by a wall, dead square or another box. Because we care for other boxes
+this check must be recursive with a max recursion depth of the amount of boxes
+in the map. The most simple freeze deadlock is illustrated in
+Figure~\ref{fig:freezeDeadlock}, where the two boxes is locked into their
+current position by each other and the wall above.
+
+\begin{figure}[h!]
+    \begin{center}
+        \includegraphics{figures/freezeDeadlock}
+    \end{center}
+    \caption{An example of a freeze deadlock.}
+    \label{fig:freezeDeadlock}
+\end{figure}
+
 
 \subsection{No influence pushes --- tunnels}
 
