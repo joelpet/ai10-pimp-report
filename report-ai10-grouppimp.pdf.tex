@@ -182,6 +182,8 @@ time comparison of boards.
 
 \subsubsection{Zobrist keys}
 
+% TODO Referera till denna sida
+% http://en.wikipedia.org/wiki/Zobrist_hashing
 Zobrist keys is a hash function that seems to work quite well for games that has
 perfect information\footnote{Every participant in the game knows all the moves}.
 Sokoban is obviously such a game, which was the reason for us trying it out. The
@@ -270,6 +272,8 @@ be made.
 
 \subsubsection{Freeze deadlock}
 
+% TODO Referera till denna sida
+% http://sokobano.de/wiki/index.php?title=Deadlocks#Freeze_deadlocks
 Another type of deadlock is a \emph{freeze deadlock}. This occur when a box gets
 blocked by a wall, dead square or another box. Because we care for other boxes
 this check must be recursive with a max recursion depth of the amount of boxes
@@ -288,6 +292,8 @@ current position by each other and the wall above.
 
 \subsection{No influence pushes --- tunnels}
 
+% TODO Referera till denna sida
+% http://sokobano.de/wiki/index.php?title=Solver#No_influence_pushes_.28tunnels.29
 A \emph{no influence push} is a push of a box that does not influence the board
 but eventually have to happen. If such pushes can be found and grouped together
 we can remove all those individual moves from the search tree and decrease the
