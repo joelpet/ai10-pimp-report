@@ -355,6 +355,33 @@ fewer nodes to expand.
 
 \part*{Results}
 
+% Our result, how many did we solve? List run times, important and interesting data
+% A thorough analysis of your experimental results
+
+We successfully solved 111 of 136 of the problems listed in 60 seconds with our
+bidirectional solver. Of these, 45 were solved in less than a second. The
+remaining 25 problems could not be solved because the solver expanded to many
+nodes in our search tree. The bidirectional solver was able to solve many more
+boards than IDSPusher (71 boards) and IDSPuller (80 boards) individually (that
+is, it solved almost 39 \% more than the puller). It should also be said that
+the bidirectional solver not only solves more boards, but increases the speed
+greatly of the boards it already solved.
+
+When running the individual solvers (IDSPusher and IDSPuller), we saw that the
+puller was able to solve a few more boards than the pusher. On the boards that
+both could solve, puller was generally faster, and on a few boards it was as
+much as 5 times faster. Because the two solvers were based on the same code and
+had only minor differences, this suggests that the puller was indeed avoiding
+more types of deadlocks.
+
+Before we implemented the solvers using iterative depth-first search we tried
+breadth-first search. We found that the algorithm required too much memory to be
+practical and it was also very slow because it had to copy the board and
+recreate the associated objects on each expansion of nodes. It should be noted
+however that we did less pruning in these early versions of our solvers, so its
+possible that a carefully optimized breadth-first search with advanced
+heuristics could perform well.
+
 
 \part*{Discussion}
 
