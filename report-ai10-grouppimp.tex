@@ -50,11 +50,11 @@
 \begin{abstract}
     In this report we present our work with a solver for the puzzle game
     Sokoban. Boards in this game can have a very large number of possible
-    states and is even PSPACE-complete, which implies that it's also NP-hard.
+    states and is even PSPACE-complete, which implies that it is also NP-hard.
     We have implemented two solvers, that search forward and backward, and a
     third solver that performs significantly better using a combined,
-    bidirectional search. We've used existing techniques such as transposition
-    tables with Zobrist hashing, as well as a few novel ones.
+    bidirectional search. We have used existing techniques such as
+    transposition tables with Zobrist hashing, as well as a few novel ones.
 \end{abstract}
 \thispagestyle{empty}
 \newpage
@@ -147,7 +147,7 @@ boxes can no longer be reached.
 Bidirectional search is a powerful way to reduce the search tree a lot
 search~\cite{russell2009}. Instead of letting one solver go all the way we let
 two solvers take turn to solve the board from both ends. As the size of the
-search tree is exponential there is a lot to gain from this approach. Let's
+search tree is exponential there is a lot to gain from this approach. Let us
 look at an example.
 
 In a complete binary tree, there are $2^n$ nodes on the level at depth $n$.
@@ -516,7 +516,7 @@ of the same deadlock.
 
 A performance profiling of a non-trivial level shows that the function that
 updates the reachable squares and boxes, updateReachabilityDFS, is the function
-that executes for the largest amount of time. Typically it's between 30 to
+that executes for the largest amount of time. Typically it is between 30 to
 70~\%, including garbage collection, for larger levels. But pushes often do not
 change the reachable squares --- except the squares the box was pushed over ---
 or only add more reachable squares. In such cases the array with reachable
