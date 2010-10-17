@@ -238,9 +238,10 @@ starting point in our dead square detection algorithm.
 
 We extended the dead square detection further by starting from the previously
 marked dead squares and checking if the squares to the right and below can only
-be moved into this square or another dead square. In that case we mark the
-squares to the right and below as dead squares. This algorithm is iterative and
-continues until no more changes can be made.
+be moved into this square or a later dead square on the same row or column,
+respectively. In that case we mark the squares to the right and below as dead
+squares. This algorithm is iterative and continues until no more changes can
+be made.
 
 \begin{figure}[h!]
     \begin{center}
