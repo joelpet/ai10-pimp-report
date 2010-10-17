@@ -159,6 +159,16 @@ techniques may reduce the average branch factor.
 
 \subsection{Repeated states}
 
+One of the probably most important pruning strategy is to check for repeated
+states. We might arrive at a state following different paths in the search tree,
+and exploring a node is only necessary to do once. That is, if we reach a state
+that we recognize, it is time to stop following that road. In order not to be
+required to store the whole board in a transposition table for repeated states
+checking, we have chosen to use a hashing algorithm called Zobrist keys. In
+addition to reducing memory usage, this type of hashing also allows constant
+time comparison of boards.
+
+
 \subsubsection{Zobrist keys}
 
 \subsection{Deadlock}
