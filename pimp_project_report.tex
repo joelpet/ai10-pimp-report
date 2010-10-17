@@ -271,6 +271,58 @@ current position by each other and the wall above.
 
 \subsection{No influence pushes --- tunnels}
 
+A \emph{no influence push} is a push of a box that does not influence the board
+but eventually have to happen. If such pushes can be found and grouped together
+we can remove all those individual moves from the search tree and decrease the
+size of it.
+
+Tunnels is a type of no influence pushes and it is the only such strategy that
+we have tried to implement. If a box is pushed inside a tunnel it makes no
+difference to the boxes outside the tunnel how far the tunnel box is pushed
+inside the tunnel. When we push a box inside a tunnel a new state is generated,
+from this state we generate all successor states, that is we try to move all
+the boxes on the board. The reason this is bad is because there is only one
+thing we can do with the box inside the tunnel, so each push on another box is
+done in vain, as we need to push on the box inside the tunnel sooner or  later.
+
+In order to solve this problem we simply look at cells in a $2 \times 3$ square
+around the box to see if it is a rotated or mirrored version of the states
+illustrated in Figure~\ref{fig:tunnelPossibilities}. Each time we detect such a
+state we can simply move the box one more step and begin again with checking if
+this new box position is inside a tunnel as well.
+
+\begin{figure}[h!]
+    \begin{center}
+        \includegraphics{figures/tunnelPossibilities1}
+        \includegraphics{figures/tunnelPossibilities2}
+    \end{center}
+    \caption{List of possible tunnel states. Must be mirrored and rotated to be
+    comprehensive.}
+    \label{fig:tunnelPossibilities}
+\end{figure}
+
+
+Figure~\ref{fig:insideTunnel} gives an example of what should be done inside a
+tunnel. In the first state we need to expand all possible movements regarding
+all boxes on the field. However in the second state illustrated we can be sure
+that the correct movement is forward, as we just came from the only other
+possible state when moving that particular box. This means that when we arrive
+at a state that resembles the second state in Figure~\ref{fig:insideTunnel}, we
+can directly push the box forward until we reach the third state.
+
+\begin{figure}[h!]
+    \begin{center}
+        \includegraphics{figures/insideTunnel1}
+        \includegraphics{figures/insideTunnel2}
+        \includegraphics{figures/insideTunnel3}
+    \end{center}
+    \caption{Sequence of tunnel states.}
+    \label{fig:insideTunnel}
+\end{figure}
+
+% TODO fixa 5a, 5b, 5c om möjligt
+
+
 \section{Heuristics}
 
 \subsection{Lower bound}
