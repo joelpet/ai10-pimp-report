@@ -401,6 +401,17 @@ helped a lot is when we implemented the adaptive deepening algorithm, which
 improved the performance of our solver, in this case the IDSPuller, so that we
 could solve another dozen levels.
 
+% TODO Fixa figur
+When we look at the levels we fail to solve in the alloted time it is clearly
+visible that a search heuristic would help alot. For example if we look at
+FIGURE WHATEVER we can see that our solver have no idea what to do, even though
+it for a human is a really easy level. If we had a search heuristic our solver
+would hopefully (depending on the heuristic, of course) realize that it is good
+to put boxes onto goals, which would guide it to the solution a lot more
+quickly than the current implementation. In the current implementation the
+solver simply tries every possible states, more or less only avoiding
+deadlocks, of which there is few on the level described in the figure.
+
 To prune the tree is incredibly important, especially in the case with Sokoban,
 as the search tree is incredibly large. We noticed large improvements when we
 implemented the deadlock detection because of this very reason, it reduced the
