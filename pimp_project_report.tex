@@ -112,7 +112,7 @@ perfect, as we could simply let the solvers take turn going deeper.
 
 To push the boxes around is the most natural solution, as it is how the game
 actually works. The basic idea was a brute-force approach that mimicked the
-human way to solve Sokoban puzzles. The naïve implementation of a pusher is
+human way to solve Sokoban puzzles. The naive implementation of a pusher is
 simple and easy to understand, however it is not particularly effective.
 Because of this we implemented a couple of pruning techniques, like tunnel
 detection and deadlock detection, which will be described later.
@@ -190,8 +190,6 @@ is being moved from its previous position and XOR it in to the new position.
 That way, we have created a new hash key for an arbitrary box movement by
 performing only two XOR operations, which only requires 2 operations.
 
-% TODO Simple example with 5x3 board.
-
 ``But hey'', you object, ``you have to take the player position in
 consideration too''. And yes, that is also true. The naive solution would
 simply be to let a cell have a state where the player is present, in addition
@@ -206,7 +204,10 @@ boxes and XOR:ing the hash with that position (which is actually also hashed).
         \includegraphics{figures/equalState1}
         \includegraphics{figures/equalState2}
     \end{center}
-    \caption{} % TODO explanation of the x mark and why the states are equal
+    \caption{Notice how the two boards are equivalent, since the player may move
+    between the two player positions without moving any boxes. This is the same
+    as saying that the top leftmost position that the player can reach in both
+    states is the same.}
     \label{fig:equalStatesDifferentHash}
 \end{figure}
 
@@ -323,6 +324,7 @@ can directly push the box forward until we reach the third state.
 \end{figure}
 
 % TODO fixa 5a, 5b, 5c om möjligt
+% subfigure isf
 
 
 \section{Heuristics}
