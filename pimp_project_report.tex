@@ -7,7 +7,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage{amsmath}
 \usepackage{amssymb}
-%\usepackage{fullpage}
+\usepackage{fullpage}
 \usepackage{graphicx}
 \usepackage{listings}
 \usepackage{parskip}
@@ -384,6 +384,45 @@ heuristics could perform well.
 
 
 \part*{Discussion}
+
+Originally we planned to implement an A* search, however the path we took with
+the IDS and bidirectional search made it harder to implement the further we went
+along. Even though we do not know how the impact of a heuristic guiding our
+entire search would have been, we have implemented small heuristics to improve
+performance. For example, when we first wrote our bidirectional search, we
+incorrectly used the original calculation of the lower bound of the search depth
+for each of the solvers. When we later realized that those values should sum up
+to the lower bound and fixed the problem accordingly, we were able to solve
+about a dozen more levels. Another good example of where a small heuristic
+helped a lot is when we implemented the adaptive deepening algorithm, which
+improved the performance of our solver, in this case the IDSPuller, so that we
+could solve another dozen levels.
+
+To prune the tree is incredibly important, especially in the case with Sokoban,
+as the search tree is incredibly large. We noticed large improvements when we
+implemented the deadlock detection because of this very reason, it reduced the
+size of the search tree. Similarly, the better performance of IDSPuller over
+IDSPusher on many boards can be attributed to the built-in deadlock avoiding of
+this algorithm.
+
+We tried common code optimization techniques, such as pre-allocating objects and
+re-using calculated values. Most of these optimizations did not yield any
+substantial benefits. For instance when we optimized the most frequently called
+function by inlining a function call and re-using a value,
+updateReachabilityDFS, we achieved about 2-3 \% better.
+
+% TODO: better what? faster solutions? more solved boards..?
+
+Normal bugs is bound to arise in the development of any project. We had
+particular problem with a couple of them which took us days to find and resolve.
+The reason they are so hard to find is because of the incredibly large search
+tree of Sokoban, it is simply to much information to go through in order to see
+where the solver does something wrong. In those cases it is helpful to be able
+to find and use a small level were the bug or performance issue shows itself.
+Even though we were able to resolve all bugs eventually, we found the
+bidirectional search particularly helpful when we had them as one solver could
+compensate for the other ones bugs.
+
 
 \section{Further improvements}
 
