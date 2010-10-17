@@ -110,7 +110,7 @@ IDSPusher, IDSPuller and a Bidirectional search combining them both.
 We chose to use iterative deepening search, also called IDS, when
 implementing the solvers. The reason we chose IDS over breadth-first search,
 BFS, was simple, memory consumption. A normal BFS would need to store every
-board state it intends to visit in a queue, which would require large memory
+board state it intends to visit in a queue, which would require a large memory
 footprint. Our original assumption was that depth-first search, DFS, would go
 down too deep into the tree and possibly go past solutions, which was the
 reason we originally chose IDS. IDS is simply a DFS that only goes down to a
