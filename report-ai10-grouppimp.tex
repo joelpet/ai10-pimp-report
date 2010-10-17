@@ -1,4 +1,4 @@
-\documentclass[a4paper,11pt]{article}
+\documentclass[a4paper,12pt]{article}
 
 \usepackage[T1]{fontenc}
 \usepackage[active]{srcltx}
@@ -28,6 +28,7 @@
     Project report from group PIMP
 }
 \author{
+    \small
     Linus Wallgren \\ 880213 \and
     Joel Bohman \\ 881117 \and
     Samuel Lidén Borell \\ 881230 \and
@@ -220,8 +221,6 @@ boxes and XOR:ing the hash with that position (which is actually also hashed).
     states is the same.}
     \label{fig:equalStatesDifferentHash}
 \end{figure}
-
-%Figure 1. Example of equivalent states when player is hashed into Zobrist keys (note that x marks the top leftmost reachable player position).
 
 The beauty of Zobrist keys is that it, as mentioned above, only requires
 constant time for each box move in the board, and also is reversible in some
