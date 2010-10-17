@@ -28,15 +28,22 @@
     Project report from group PIMP
 }
 \author{
+    Linus Wallgren \\ 880213 \and
     Joel Bohman \\ 881117 \and
     Samuel Lidén Borell \\ 881230 \and
-    Joel Pettersson \\ 880519 \and
-    Linus Wallgren \\ 880213
+    Joel Pettersson \\ 880519 
 }
 \date{\today}
 
 \begin{document}
 \maketitle
+
+\begin{figure}[h!]
+    \begin{center}
+        \includegraphics{figures/gruppbild}
+    \end{center}
+\end{figure}
+
 \thispagestyle{empty}
 \newpage
 \begin{abstract}
@@ -49,8 +56,6 @@
     tables with Zobrist hashing, as well as a few novel ones.
 \end{abstract}
 \thispagestyle{empty}
-%\mbox{}
-%\thispagestyle{empty}
 \newpage
 \setcounter{page}{1}
 
@@ -177,6 +182,8 @@ time comparison of boards.
 
 \subsubsection{Zobrist keys}
 
+% TODO Referera till denna sida
+% http://en.wikipedia.org/wiki/Zobrist_hashing
 Zobrist keys is a hash function that seems to work quite well for games that has
 perfect information\footnote{Every participant in the game knows all the moves}.
 Sokoban is obviously such a game, which was the reason for us trying it out. The
@@ -221,8 +228,12 @@ boxes and XOR:ing the hash with that position (which is actually also hashed).
 The beauty of Zobrist keys is that it, as mentioned above, only requires
 constant time for each box move in the board, and also is reversible in some
 sense. This turned out later to be very useful, when implementing the
-bi-directional search solver.
-% TODO se till att vi har beskrivit hur vi backtrackar mha hashen
+bidirectional search solver. Thanks to the properties of Zobrist keys and only a
+little additional information in every state (which box was pushed in what
+direction and the player position), we are able to calculate the hash for the
+next state, and thereby follow the other solver's path all the way into the goal
+state.
+
 
 \subsection{Deadlock}
 
@@ -261,6 +272,8 @@ be made.
 
 \subsubsection{Freeze deadlock}
 
+% TODO Referera till denna sida
+% http://sokobano.de/wiki/index.php?title=Deadlocks#Freeze_deadlocks
 Another type of deadlock is a \emph{freeze deadlock}. This occur when a box gets
 blocked by a wall, dead square or another box. Because we care for other boxes
 this check must be recursive with a max recursion depth of the amount of boxes
@@ -279,6 +292,8 @@ current position by each other and the wall above.
 
 \subsection{No influence pushes --- tunnels}
 
+% TODO Referera till denna sida
+% http://sokobano.de/wiki/index.php?title=Solver#No_influence_pushes_.28tunnels.29
 A \emph{no influence push} is a push of a box that does not influence the board
 but eventually have to happen. If such pushes can be found and grouped together
 we can remove all those individual moves from the search tree and decrease the
@@ -408,8 +423,8 @@ improved the performance of our solver, in this case the IDSPuller, so that we
 could solve another dozen levels.
 
 When we look at the levels we fail to solve in the alloted time it is clearly
-visible that a search heuristic would help alot. For example if we look at
-figure~\ref{fig:level136} we can see that our solver have no idea what to do,
+visible that a search heuristic would help a lot. For example if we look at
+Figure~\ref{fig:level136} we can see that our solver have no idea what to do,
 even though it for a human is a really easy level. If we had a search heuristic
 our solver would hopefully (depending on the heuristic, of course) realize that
 it is good to put boxes onto goals, which would guide it to the solution a lot
@@ -421,7 +436,7 @@ deadlocks, of which there is few on the level described in the figure.
     \begin{center}
         \includegraphics{figures/level136}
     \end{center}
-    \caption{Example level illustrating the power of heuristics}
+    \caption{Example level illustrating the power of heuristics.}
     \label{fig:level136}
 \end{figure}
 
