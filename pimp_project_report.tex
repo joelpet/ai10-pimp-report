@@ -80,13 +80,80 @@ this set of levels.
 
 \part*{Theory and method}
 
+% Explain the solutions we tried, answer why, how and what?
+% A summary of your design approach and implementation
+
+Sokoban can be solved by many different methods, as it is NP-hard and
+PSPACE-complete it has not been proven that there exists an optimal solution,
+but there are ways to prune the search tree and different kinds of heuristics
+that can be used to find a solution faster. Our focus has been on pruning
+techniques to reduce the size of the search tree, with heuristics for choosing
+the search depth and solver. Our work resulted in three different solvers ---
+IDSPusher, IDSPuller and a Bidirectional search combining them both.
+
+
 \section{Solvers}
+
+We chose to use iterative deepening search, also called IDS, when
+implementing the solvers. The reason we chose IDS over breadth-first search,
+BFS,  was simple, memory consumption. A normal BFS would need to store every
+state it intends to visit in a queue, which would require large memory
+footprint. Our original assumption was that depth-first search, DFS, would go
+down too deep into the tree and possibly go past solutions, which was the
+reason we originally chose IDS. IDS is simply a DFS that only goes down to a
+certain level in the tree, if we find the solution we are done, otherwise we
+increase the depth and try again.
+
+When we began to implement the bidirectional search we found that IDS was
+perfect, as we could simply let the agents take turn going deeper.
 
 \subsection{IDSPusher}
 
+To push the boxes around is the most natural solution, as it is how the game
+actually works. The basic idea was a brute-force approach that mimicked the
+human way to solve Sokoban puzzles. The naïve implementation of a pusher is
+simple and easy to understand, however it is not particularly effective.
+Because of this we implemented a couple of pruning techniques, like tunnel
+detection and deadlock detection, which will be described later.
+
 \subsection{IDSPuller}
 
+Puller is our name for a method in which we reverse the goal and box positions.
+Instead of trying to push boxes from their start positions to their goal we try
+to pull boxes from the goals to their start positions. The advantage of this
+approach is that no so called freeze deadlocks can occur~\cite{takes2007},
+which reduces the number of useless state. This works because freeze deadlocks
+occur when a box gets blocked by other boxes, and this can't happen when
+pulling boxes because the player must be able to reach the square where the box
+is to be pulled to.  It's still possible however to move a box such that some
+boxes can no longer be reached.
+
+
 \subsection{Bidirectional search using IDSPusher and IDSPuller}
+
+Bidirectional search is a powerful way to reduce the search tree a lot
+search~\cite{russell2009}. Instead of letting one solver go all the way we let
+two solvers take turn to solve the board from both ends. As the size of the
+search tree is exponential there is a lot to gain from this approach. Let's
+look at an example.
+
+% TODO: xun, ser detta ok ut?
+In a complete binary tree, there is $2^n$ nodes on the level at depth $n$. Thus,
+the total number of nodes is $2^n + 2^{(n-1)} + \ldots + 2^0$. Thinking of this
+as a binary number we see that $2^n > 2^{(n-1)} + \ldots + 2^0$, e.g. $1000_2 =
+8_{10} > 0111_2 = 7_{10}$. This implies that more than half of our nodes are on
+the lowest level. When we use bidirectional search we only need to search to
+half the depth --- two times. This means the number of nodes in the lowest level
+will be $2^(n/2)$ for each one of the two solvers, which is much less than the
+$2^n$ nodes required originally.
+
+In a Sokoban problem the branch factor will typically be much higher than two
+because there are often at least a couple of boxes that can be pushed from four
+sides in the worst case (if there are no walls or other boxes at the sides).
+That makes it even more efficient for this kind of search, even though pruning
+techniques may reduce the average branch factor.
+
+
 
 \section{Pruning techniques}
 
