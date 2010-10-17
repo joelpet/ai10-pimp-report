@@ -50,7 +50,33 @@
 
 \part*{Introduction and background}
 
+% - Some kind of introduction and one or two paragraphs about current solvers.
+% - Short introduction to the problem and a description of the relationship to
+%   the course material. also present what you think are your biggest
+%   contributions so that this is clear. be sure to credit anyone that you got
+%   help/code from
+
+Sokoban is a puzzle created in 1981 by Hiroyuki Imabayashi. Sokoban is a
+difficult puzzle and it has been proven that it is
+PSPACE-complete~\cite{culberson1997}, which is a superset of NP. Current
+solvers use techniques such as Iterative Deepening Search (IDS), Depth First
+Search (DFS), Breadth-First Search (BFS), A* and combination of them to
+traverse the search tree. Sokoban has a large branching factor which result in
+a large search tree. To be able to traverse the search tree in any reasonable
+time, pruning techniques and heuristics are necessary.  Humans can solve
+Sokoban puzzles by advanced heuristics that becomes natural to us after playing
+the game for a while.  
+
+
 \section{Problem statement}
+
+% a clear formalization of the problem using course material: which methods, how and why
+
+Our task is to implement a program that is able to solve as many Sokoban levels
+as possible. We have received test data that contains 136 levels to test our
+solver against. However, we are not supposed to specialize our solver(s) for
+this set of levels.
+
 
 \part*{Theory and method}
 
