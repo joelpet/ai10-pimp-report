@@ -442,25 +442,32 @@ large amount of states that will be expanded.
 \subsection{Corrals}
 
 Corrals resembles no influence pushes in that moving a box inside a corral does
-not affect the rest of the board, Figure~\ref{fig:corrals} is a good example.
-There are several types of corrals. The I-Corral is a corral where the player
-can push only the outer boxes of the corral inwards, meanwhile a IP-Corral is an
-I-corral where you can move all of the outer boxes. As with no influence pushes
-a corral need to be resolved sooner or later, if the boxes are not all on goal
-squares.  As the corrals need to be resolved it is better to solve them right
-away in order to detect possible deadlocks, rather than to expand other
-possibilities and later find out they do not work because of the same deadlock.
+not affect the rest of the board.  There are several types of corrals. The
+I-Corral (Figure~\ref{fig:corralsI}) is a corral where the player can push only
+the outer boxes of the corral inwards, meanwhile an IP-Corral
+(Figure~\ref{fig:corralsIP}) is an I-corral where you can move all of the outer
+boxes. As with no influence pushes a corral need to be resolved sooner or later,
+if the boxes are not all on goal squares.  As the corrals need to be resolved it
+is better to solve them right away in order to detect possible deadlocks, rather
+than to expand other possibilities and later find out they do not work because
+of the same deadlock.
 
 \begin{figure}[h!]
     \begin{center}
-        \includegraphics{figures/corrals1}
-        \includegraphics{figures/corrals2}
+        \includegraphics{figures/corralsI}
     \end{center}
-    \caption{Examples of corrals.}
-    \label{fig:corrals}
+    \caption{Example of I-corral.}
+    \label{fig:corralsI}
 \end{figure}
 
-% TODO shoud this be broken into two figures?
+\begin{figure}[h!]
+    \begin{center}
+        \includegraphics{figures/corralsIP}
+    \end{center}
+    \caption{Example of IP-corral.}
+    \label{fig:corralsIP}
+\end{figure}
+
 
 
 \subsection{Incremental reachable square search}
