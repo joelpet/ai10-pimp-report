@@ -226,8 +226,12 @@ boxes and XOR:ing the hash with that position (which is actually also hashed).
 The beauty of Zobrist keys is that it, as mentioned above, only requires
 constant time for each box move in the board, and also is reversible in some
 sense. This turned out later to be very useful, when implementing the
-bi-directional search solver.
-% TODO se till att vi har beskrivit hur vi backtrackar mha hashen
+bidirectional search solver. Thanks to the properties of Zobrist keys and only a
+little additional information in every state (which box was pushed in what
+direction and the player position), we are able to calculate the hash for the
+next state, and thereby follow the other solver's path all the way into the goal
+state.
+
 
 \subsection{Deadlock}
 
