@@ -40,7 +40,13 @@
 \thispagestyle{empty}
 \newpage
 \begin{abstract}
-    % TODO write abstract
+    In this report we present our work with a solver for the puzzle game
+    Sokoban. Boards in this game can have a very large number of possible
+    states and is even PSPACE-complete, which implies that it's also NP-hard.
+    We have implemented two solvers, that search forward and backward, and a
+    third solver that performs significantly better using a combined,
+    bidirectional search. We've used existing techniques such as transposition
+    tables with Zobrist hashing, as well as a few novel ones.
 \end{abstract}
 \thispagestyle{empty}
 %\mbox{}
@@ -112,7 +118,7 @@ perfect, as we could simply let the solvers take turn going deeper.
 
 To push the boxes around is the most natural solution, as it is how the game
 actually works. The basic idea was a brute-force approach that mimicked the
-human way to solve Sokoban puzzles. The naïve implementation of a pusher is
+human way to solve Sokoban puzzles. The naive implementation of a pusher is
 simple and easy to understand, however it is not particularly effective.
 Because of this we implemented a couple of pruning techniques, like tunnel
 detection and deadlock detection, which will be described later.
@@ -138,15 +144,14 @@ two solvers take turn to solve the board from both ends. As the size of the
 search tree is exponential there is a lot to gain from this approach. Let's
 look at an example.
 
-% TODO: xun, ser detta ok ut?
-In a complete binary tree, there is $2^n$ nodes on the level at depth $n$. Thus,
-the total number of nodes is $2^n + 2^{(n-1)} + \ldots + 2^0$. Thinking of this
-as a binary number we see that $2^n > 2^{(n-1)} + \ldots + 2^0$, e.g. $1000_2 =
-8_{10} > 0111_2 = 7_{10}$. This implies that more than half of our nodes are on
-the lowest level. When we use bidirectional search we only need to search to
-half the depth --- two times. This means the number of nodes in the lowest level
-will be $2^{(n/2)}$ for each one of the two solvers, which is much less than the
-$2^n$ nodes required originally.
+In a complete binary tree, there are $2^n$ nodes on the level at depth $n$.
+Thus, the total number of nodes is $2^n + 2^{(n-1)} + \ldots + 2^0$. Thinking
+of this as a binary number we see that $2^n > 2^{(n-1)} + \ldots + 2^0$, e.g.
+$1000_2 = 8_{10} > 0111_2 = 7_{10}$. This implies that more than half of our
+nodes are in the lowest level. When we use bidirectional search we only need to
+search to half the depth --- two times. This means the number of nodes in the
+lowest level will be $2^{(n/2)}$ for each one of the two solvers, which is much
+less than the $2^n$ nodes required originally.
 
 In a Sokoban problem the branch factor will typically be much higher than two
 because there are often at least a couple of boxes that can be pushed from four
@@ -190,8 +195,6 @@ is being moved from its previous position and XOR it in to the new position.
 That way, we have created a new hash key for an arbitrary box movement by
 performing only two XOR operations, which only requires 2 operations.
 
-% TODO Simple example with 5x3 board.
-
 ``But hey'', you object, ``you have to take the player position in
 consideration too''. And yes, that is also true. The naive solution would
 simply be to let a cell have a state where the player is present, in addition
@@ -206,7 +209,10 @@ boxes and XOR:ing the hash with that position (which is actually also hashed).
         \includegraphics{figures/equalState1}
         \includegraphics{figures/equalState2}
     \end{center}
-    \caption{} % TODO explanation of the x mark and why the states are equal
+    \caption{Notice how the two boards are equivalent, since the player may move
+    between the two player positions without moving any boxes. This is the same
+    as saying that the top leftmost position that the player can reach in both
+    states is the same.}
     \label{fig:equalStatesDifferentHash}
 \end{figure}
 
@@ -323,6 +329,7 @@ can directly push the box forward until we reach the third state.
 \end{figure}
 
 % TODO fixa 5a, 5b, 5c om möjligt
+% subfigure isf
 
 
 \section{Heuristics}
@@ -399,6 +406,17 @@ about a dozen more levels. Another good example of where a small heuristic
 helped a lot is when we implemented the adaptive deepening algorithm, which
 improved the performance of our solver, in this case the IDSPuller, so that we
 could solve another dozen levels.
+
+% TODO Fixa figur
+When we look at the levels we fail to solve in the alloted time it is clearly
+visible that a search heuristic would help alot. For example if we look at
+FIGURE WHATEVER we can see that our solver have no idea what to do, even though
+it for a human is a really easy level. If we had a search heuristic our solver
+would hopefully (depending on the heuristic, of course) realize that it is good
+to put boxes onto goals, which would guide it to the solution a lot more
+quickly than the current implementation. In the current implementation the
+solver simply tries every possible states, more or less only avoiding
+deadlocks, of which there is few on the level described in the figure.
 
 To prune the tree is incredibly important, especially in the case with Sokoban,
 as the search tree is incredibly large. We noticed large improvements when we
