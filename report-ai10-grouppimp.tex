@@ -85,10 +85,10 @@ the game for a while.
 
 % a clear formalization of the problem using course material: which methods, how and why
 
-Our task is to implement a program that is able to solve as many Sokoban levels
-as possible. We have received test data that contains 136 levels to test our
-solver against. However, we are not supposed to specialize our solver(s) for
-this set of levels.
+Our task is to implement a program that is able to solve as many Sokoban boards
+as possible. We have received test data that contains 136 boards to test our
+solver against. However, we are not supposed to specialize our solvers for
+this set of boards.
 
 
 \part*{Theory and method}
@@ -410,26 +410,26 @@ performance. For example, when we first wrote our bidirectional search, we
 incorrectly used the original calculation of the lower bound of the search depth
 for each of the solvers. When we later realized that those values should sum up
 to the lower bound and fixed the problem accordingly, we were able to solve
-about a dozen more levels. Another good example of where a small heuristic
+about a dozen more boards. Another good example of where a small heuristic
 helped a lot is when we implemented the adaptive deepening algorithm, which
 improved the performance of our solver, in this case the IDSPuller, so that we
-could solve another dozen levels.
+could solve another dozen boards.
 
-When we look at the levels we fail to solve in the alloted time it is clearly
+When we look at the boards we fail to solve in the alloted time it is clearly
 visible that a search heuristic would help a lot. For example if we look at
 Figure~\ref{fig:level136} we can see that our solver have no idea what to do,
-even though it for a human is a really easy level. If we had a search heuristic
+even though it for a human is a really easy board. If we had a search heuristic
 our solver would hopefully (depending on the heuristic, of course) realize that
 it is good to put boxes onto goals, which would guide it to the solution a lot
 more quickly than the current implementation. In the current implementation the
 solver simply tries every possible states, more or less only avoiding
-deadlocks, of which there is few on the level described in the figure.
+deadlocks, of which there is few on the board described in the figure.
 
 \begin{figure}[h!]
     \begin{center}
         \includegraphics{figures/level136}
     \end{center}
-    \caption{Example level illustrating the power of heuristics.}
+    \caption{Example board illustrating the power of heuristics.}
     \label{fig:level136}
 \end{figure}
 
@@ -453,7 +453,7 @@ particular problem with a couple of them which took us days to find and resolve.
 The reason they are so hard to find is because of the incredibly large search
 tree of Sokoban, it is simply to much information to go through in order to see
 where the solver does something wrong. In those cases it is helpful to be able
-to find and use a small level were the bug or performance issue shows itself.
+to find and use a small board were the bug or performance issue shows itself.
 Even though we were able to resolve all bugs eventually, we found the
 bidirectional search particularly helpful when we had them as one solver could
 compensate for the other ones bugs.
@@ -514,10 +514,10 @@ of the same deadlock.
 
 \subsection{Incremental reachable square search}
 
-A performance profiling of a non-trivial level shows that the function that
+A performance profiling of a non-trivial board shows that the function that
 updates the reachable squares and boxes, updateReachabilityDFS, is the function
 that executes for the largest amount of time. Typically it is between 30 to
-70~\%, including garbage collection, for larger levels. But pushes often do not
+70~\%, including garbage collection, for larger boards. But pushes often do not
 change the reachable squares --- except the squares the box was pushed over ---
 or only add more reachable squares. In such cases the array with reachable
 squares does not have to be cleared and the search could be done incrementally,
@@ -531,7 +531,7 @@ that is, based on the existing data.
 With relatively few and simple algorithms we have managed to implement a
 working Sokoban solver with reasonable performance. Sadly there were some
 algorithms which we did not have time to implement and we were not able to
-solve all the levels we were given. However, it was meaningful to see what was
+solve all the boards we were given. However, it was meaningful to see what was
 possible to do with mostly pruning techniques. The bidirectional solver was
 particularly interesting because of the way it works and the incredibly large
 performance improvement it gave us.
