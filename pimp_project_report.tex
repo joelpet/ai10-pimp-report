@@ -219,7 +219,37 @@ bi-directional search solver.
 
 \subsection{Deadlock}
 
+Detecting deadlock is another important pruning technique. A deadlock is a
+state where it is no longer possible to solve the puzzle. For example a deadlock
+is achieved when a box move result in two or more boxes being stuck. Other boxes
+can continue moving on the board until the search space is exhausted. When this
+happens the solver need to backtrack to a previous state where the deadlock did
+not occur. By finding this deadlock a large amount of nodes in the search tree
+can be pruned.
+
 \subsubsection{Dead squares deadlock}
+
+A \emph{dead square} is a position from which a box can never be pushed into a
+goal. These can be calculated statically for every board, as the only thing
+required is the positions of the walls and these do not change during the game.
+The most obvious case is a corner, from which a box can only be reached from two
+directions but is blocked by a walls at the opposite sides. This is used as a
+starting point in our dead square detection algorithm.
+
+We extended the dead square detection further by starting from the previously
+marked dead squares and checking if the squares to the right and below can only
+be moved into this square or another dead square. In that case we mark the
+squares to the right and below as dead squares. This algorithm is iterative and
+continues until no more changes can be made.
+
+\begin{figure}[h!]
+    \begin{center}
+        \includegraphics{figures/deadSquareDeadlock}
+    \end{center}
+    \caption{An example of a dead square deadlock marking. The dead squares are
+    marked with a minus sign (-).}
+    \label{fig:deadSquareDeadlock}
+\end{figure}
 
 \subsubsection{Freeze deadlock}
 
