@@ -327,8 +327,31 @@ can directly push the box forward until we reach the third state.
 
 \subsection{Lower bound}
 
+Before we start searching we use a greedy algorithm to calculate the minimum
+distance in squares between the boxes and the goals, and use this value as the
+search depth limit in the initial iteration of our IDS. This reduces the number
+of iterations that have to be performed as we can be certain no solution will be
+found above this depth. This is true in the bidirectional solver as well. As the
+bidirectional solver consist of two separate solvers each of them only need to
+go half the distance in order to meet in the middle, which is the reason we
+choose to halve the lower bound for each solver in the bidirectional search.
+
+\subsection{Adaptive deepening}
+
+Similarly to the lower bound we use a heuristic to choose the search depth limit
+for subsequent iterations. This is based on the number of leaf nodes, where we
+look at the ratio between the current and the last iteration. In case of a
+higher ratio, where the number of leaf nodes is constant or decreasing we make a
+larger step. Again, this reduces the number of iterations needed to solve the
+board.
+
 \subsection{Choosing solver}
 
+In our bidirectional solver we need to choose which direction to search from in
+each iteration (from the start state and forward or from the goal state and
+backward). We choose the solver with the minimum number of leaf nodes, because
+we expect that solver to go deeper down the tree faster, as it probably has
+fewer nodes to expand.
 
 \part*{Results}
 
