@@ -138,15 +138,14 @@ two solvers take turn to solve the board from both ends. As the size of the
 search tree is exponential there is a lot to gain from this approach. Let's
 look at an example.
 
-% TODO: xun, ser detta ok ut?
-In a complete binary tree, there is $2^n$ nodes on the level at depth $n$. Thus,
-the total number of nodes is $2^n + 2^{(n-1)} + \ldots + 2^0$. Thinking of this
-as a binary number we see that $2^n > 2^{(n-1)} + \ldots + 2^0$, e.g. $1000_2 =
-8_{10} > 0111_2 = 7_{10}$. This implies that more than half of our nodes are on
-the lowest level. When we use bidirectional search we only need to search to
-half the depth --- two times. This means the number of nodes in the lowest level
-will be $2^{(n/2)}$ for each one of the two solvers, which is much less than the
-$2^n$ nodes required originally.
+In a complete binary tree, there are $2^n$ nodes on the level at depth $n$.
+Thus, the total number of nodes is $2^n + 2^{(n-1)} + \ldots + 2^0$. Thinking
+of this as a binary number we see that $2^n > 2^{(n-1)} + \ldots + 2^0$, e.g.
+$1000_2 = 8_{10} > 0111_2 = 7_{10}$. This implies that more than half of our
+nodes are in the lowest level. When we use bidirectional search we only need to
+search to half the depth --- two times. This means the number of nodes in the
+lowest level will be $2^{(n/2)}$ for each one of the two solvers, which is much
+less than the $2^n$ nodes required originally.
 
 In a Sokoban problem the branch factor will typically be much higher than two
 because there are often at least a couple of boxes that can be pushed from four
