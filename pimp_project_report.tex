@@ -12,6 +12,7 @@
 \usepackage{listings}
 \usepackage{parskip}
 \usepackage{srcltx}
+\usepackage{subfigure}
 \usepackage{url}
 
 \urlstyle{same}
@@ -452,25 +453,43 @@ is better to solve them right away in order to detect possible deadlocks, rather
 than to expand other possibilities and later find out they do not work because
 of the same deadlock.
 
-\begin{figure}[h!]
-    \begin{center}
-        \includegraphics{figures/corralsI}
-    \end{center}
-    \caption{Example of I-corral.}
-    \label{fig:corralsI}
-\end{figure}
+%\begin{figure}[h!]
+    %\begin{center}
+        %\includegraphics{figures/corralsI}
+    %\end{center}
+    %\caption{Example of I-corral.}
+    %\label{fig:corralsI}
+%\end{figure}
+
+%\begin{figure}[h!]
+    %\begin{center}
+        %\includegraphics{figures/corralsIP}
+    %\end{center}
+    %\caption{Example of IP-corral.}
+    %\label{fig:corralsIP}
+%\end{figure}
 
 \begin{figure}[h!]
-    \begin{center}
-        \includegraphics{figures/corralsIP}
-    \end{center}
-    \caption{Example of IP-corral.}
-    \label{fig:corralsIP}
+  \begin{center}
+    \subfigure[I-corral.]{\label{fig:corralsI}\includegraphics{figures/corralsI}}
+    \subfigure[IP-corral.]{\label{fig:corralsIP}\includegraphics{figures/corralsIP}}
+  \end{center}
+  \caption{Examples of corrals.}
+  \label{fig:corrals}
 \end{figure}
-
 
 
 \subsection{Incremental reachable square search}
+
+A performance profiling of a non-trivial level shows that the function that
+updates the reachable squares and boxes, updateReachabilityDFS, is the function
+that executes for the largest amount of time. Typically it's between 30 to
+70~\%, including garbage collection, for larger levels. But pushes often do not
+change the reachable squares --- except the squares the box was pushed over ---
+or only add more reachable squares. In such cases the array with reachable
+squares does not have to be cleared and the search could be done incrementally,
+that is, based on the existing data.
+
 
 \part*{Conclusion}
 
