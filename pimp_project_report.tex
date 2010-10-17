@@ -171,6 +171,52 @@ time comparison of boards.
 
 \subsubsection{Zobrist keys}
 
+Zobrist keys is a hash function that seems to work quite well for games that has
+perfect information\footnote{Every participant in the game knows all the moves}.
+Sokoban is obviously such a game, which was the reason for us trying it out. The
+hashing algorithm makes heavy use of the XOR operation and its property that
+given two bitstrings $x$ and $y$, the result of $(x \oplus y) \oplus y$ equals
+$x$.
+
+We implemented it by generating a random number for every possible state ---
+\emph{empty} or \emph{box} --- of every cell on the board, which are stored in a
+three-dimensional array. In order to calculate the hash of a board, one must
+start with an empty hash key and iterate over every cell on the board and
+XOR in the corresponding random number for that cell and state . ``Now wait'',
+you say, ``this requires $n^2$ operations''. And yes, that is true, however, the
+next time we make changes to boxes on the board, we simply XOR out the box that
+is being moved from its previous position and XOR it in to the new position.
+That way, we have created a new hash key for an arbitrary box movement by
+performing only two XOR operations, which only requires 2 operations.
+
+% TODO Simple example with 5x3 board.
+
+``But hey'', you object, ``you have to take the player position in consideration
+too''. And yes, that is also true. The naive solution would simply be to let a
+cell have a state where the player is present, in addition to the states \emph{empty}
+and \emph{box}. However, that would cause many equivalent states to generate
+different hashes, like those in \ref{fig:equalStatesDifferentHash}. For that
+reason, we instead keep track of the top leftmost position that the player may
+reach without moving any boxes and XOR:ing the hash with that position (which is
+actually also hashed).
+
+\begin{figure}[h!]
+    \begin{center}
+        \includegraphics{figures/equalState1}
+        \includegraphics{figures/equalState2}
+    \end{center}
+    \caption{} % TODO explanation of the x mark and why the states are equal
+    \label{fig:equalStatesDifferentHash}
+\end{figure}
+
+%Figure 1. Example of equivalent states when player is hashed into Zobrist keys (note that x marks the top leftmost reachable player position).
+
+The beauty of Zobrist keys is that it, as mentioned above, only requires
+constant time for each box move in the board, and also is reversible in some
+sense. This turned out later to be very useful, when implementing the
+bi-directional search solver.
+% TODO se till att vi har beskrivit hur vi backtrackar mha hashen
+
 \subsection{Deadlock}
 
 \subsubsection{Dead squares deadlock}
