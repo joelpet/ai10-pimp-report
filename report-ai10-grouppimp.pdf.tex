@@ -40,7 +40,13 @@
 \thispagestyle{empty}
 \newpage
 \begin{abstract}
-    % TODO write abstract
+    In this report we present our work with a solver for the puzzle game
+    Sokoban. Boards in this game can have a very large number of possible
+    states and is even PSPACE-complete, which implies that it's also NP-hard.
+    We have implemented two solvers, that search forward and backward, and a
+    third solver that performs significantly better using a combined,
+    bidirectional search. We've used existing techniques such as transposition
+    tables with Zobrist hashing, as well as a few novel ones.
 \end{abstract}
 \thispagestyle{empty}
 %\mbox{}
